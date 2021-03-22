@@ -6,6 +6,7 @@ import classes from './Quiz.module.css';
 
 class Quiz extends React.Component {
   state = {
+    countClick: 0,
     activeQuestion: 0,
     isFinished: false,
     quiz: [
@@ -84,9 +85,20 @@ class Quiz extends React.Component {
   onAnswerClickHandler = (id) => {
     const quiz = this.state.quiz;
     const activeQuestion = this.state.activeQuestion + 1;
-    
-    if(this.state.quiz[this.state.activeQuestion].rightAnswerId === id){
 
+    // Запоминает ответ пользователя
+    if (this.state.countClick === 0){
+      quiz[this.state.activeQuestion].userAnswer = id;
+
+      this.setState({
+        quiz: quiz,
+        countClick: this.state.countClick + 1
+      })
+    }
+
+    if(this.state.quiz[this.state.activeQuestion].rightAnswerId === id){
+      
+      // Показывает итоговую карточку
       if (activeQuestion >= this.state.quiz.length){
         quiz[this.state.activeQuestion].answers[--id].answerColor = AnswerItem.success;
 
@@ -97,7 +109,8 @@ class Quiz extends React.Component {
         setTimeout(
           () => {
             quiz[this.state.activeQuestion].answers.map((answer) => {
-              answer.answerColor = '';
+              return answer.answerColor = '';
+              // answer.userAnswer = '';
             })
 
             this.setState({
@@ -107,6 +120,7 @@ class Quiz extends React.Component {
         );
 
       } else {
+        // Переходит к следующему вопросу, обнуляет счетчик кликов до 0
         quiz[this.state.activeQuestion].answers[--id].answerColor = AnswerItem.success;
 
         this.setState({
@@ -116,20 +130,23 @@ class Quiz extends React.Component {
         setTimeout(
           () => {
             quiz[this.state.activeQuestion].answers.map((answer) => {
-              answer.answerColor = '';
+              return answer.answerColor = '';
+              // answer.userAnswer = '';
             })
 
             this.setState({ 
               activeQuestion: this.state.activeQuestion + 1,
-              quiz: quiz
+              quiz: quiz,
+              countClick: 0
             })
           }, 1000
         );       
       }
       
     } else {
+      // Если неправильны йответ, подсвечивает ответ красным
       quiz[this.state.activeQuestion].answers[--id].answerColor = AnswerItem.error;
-
+    
       this.setState({
         quiz: quiz
       })
@@ -137,8 +154,15 @@ class Quiz extends React.Component {
   }
 
   // Сбросить тест пройти еще раз
-  onResetTest = () =>{
+  onResetTest = () => {
+    const quiz = this.state.quiz;
+    quiz.map((answer) => {
+      return answer.userAnswer = '';
+    })
+
     this.setState({
+      quiz: quiz,
+      countClick: 0,
       activeQuestion: 0,
       isFinished: false
     })
@@ -153,6 +177,7 @@ class Quiz extends React.Component {
             (this.state.isFinished) 
               ? <FinishedQuiz 
                   onResetTest={this.onResetTest}
+                  quiz={this.state.quiz}
                 /> 
               : <ActiveQuiz 
                   quiz={this.state.quiz[this.state.activeQuestion]}
