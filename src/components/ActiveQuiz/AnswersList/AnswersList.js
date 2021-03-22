@@ -3,9 +3,7 @@ import AnswerItem from './AnswerItem/AnswerItem';
 import classes from './AnswersList.module.css';
 
 
-const AnswersList = ({answers}) => {
-
-
+const AnswersList = ({answers, onAnswerClickHandler}) => {
 
   return (
     <ul className={classes.AnswersList}>
@@ -13,7 +11,8 @@ const AnswersList = ({answers}) => {
         return (
           <AnswerItem 
             key={answer.id}
-            text={answer.text}
+            answer={answer}
+            onAnswerClickHandler={onAnswerClickHandler}
           />
         );
       })}
