@@ -1,5 +1,6 @@
 import React from 'react';
 // import AnswerItem from '../ActiveQuiz/AnswersList/AnswerItem/AnswerItem';
+import Button from '../UI/Button/Button';
 import classes from './FinishedQuiz.module.css';
 
 const FinishedQuiz = ({quiz, onResetTest}) => {
@@ -15,9 +16,13 @@ const FinishedQuiz = ({quiz, onResetTest}) => {
     <div className={classes.FinishedQuiz}>
       <h2>Ваши результаты теста</h2>
       {userAnswers}
-      <button onClick={() => onResetTest()}>
-        Пройти тест еще раз
-      </button>
+      <Button
+        type={'error'}
+        onClick={onResetTest}
+        disabled={false}
+      >
+        Пройти тест еще раз?
+      </Button>
     </div>
   );
 }

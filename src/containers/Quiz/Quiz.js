@@ -1,7 +1,6 @@
 import React from 'react';
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
-import AnswerItem from '../../components/ActiveQuiz/AnswersList/AnswerItem/AnswerItem.module.css'
 import classes from './Quiz.module.css';
 
 class Quiz extends React.Component {
@@ -100,7 +99,7 @@ class Quiz extends React.Component {
       
       // Показывает итоговую карточку
       if (activeQuestion >= this.state.quiz.length){
-        quiz[this.state.activeQuestion].answers[--id].answerColor = AnswerItem.success;
+        quiz[this.state.activeQuestion].answers[--id].answerColor = 'success';
 
         this.setState({
           quiz: quiz
@@ -110,7 +109,6 @@ class Quiz extends React.Component {
           () => {
             quiz[this.state.activeQuestion].answers.map((answer) => {
               return answer.answerColor = '';
-              // answer.userAnswer = '';
             })
 
             this.setState({
@@ -121,7 +119,7 @@ class Quiz extends React.Component {
 
       } else {
         // Переходит к следующему вопросу, обнуляет счетчик кликов до 0
-        quiz[this.state.activeQuestion].answers[--id].answerColor = AnswerItem.success;
+        quiz[this.state.activeQuestion].answers[--id].answerColor = 'success';
 
         this.setState({
           quiz: quiz
@@ -131,7 +129,6 @@ class Quiz extends React.Component {
           () => {
             quiz[this.state.activeQuestion].answers.map((answer) => {
               return answer.answerColor = '';
-              // answer.userAnswer = '';
             })
 
             this.setState({ 
@@ -144,8 +141,8 @@ class Quiz extends React.Component {
       }
       
     } else {
-      // Если неправильны йответ, подсвечивает ответ красным
-      quiz[this.state.activeQuestion].answers[--id].answerColor = AnswerItem.error;
+      // Если неправильный ответ, подсвечивает ответ красным
+      quiz[this.state.activeQuestion].answers[--id].answerColor = 'error';
     
       this.setState({
         quiz: quiz

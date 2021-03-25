@@ -3,9 +3,11 @@ import classes from './AnswerItem.module.css';
 
 const AnswerItem = ({answer, onAnswerClickHandler}) => {
 
+  const cls = [classes.AnswerItem, classes[answer.answerColor]];
+  
   return (
     <li 
-      className={`${classes.AnswerItem} ${answer.answerColor}`}
+      className={cls.join(' ')}
       onClick={() => onAnswerClickHandler(answer.id)}
     >
       {answer.text}
